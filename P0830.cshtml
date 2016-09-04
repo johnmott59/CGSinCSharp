@@ -1,0 +1,195 @@
+﻿
+@{
+// ViewBag.Title = "Index";
+}
+
+@section HeaderScripts {
+
+    <script type="text/javascript" src="~/Scripts/P0830/3JSInclude.js"></script>
+    <script src="~/Content/threejs/libs/three.js"></script>
+
+}
+
+<div class="container">
+
+    <h2>Meshola Development @ViewBag.Title </h2>
+  
+   
+    <table>
+        <tr>
+
+            <td colspan="2" style="padding-left:20px" valign="top">
+                <p>
+                    This is development prototype 0830. This prototype implements Constructive Solid Geometry (CSG) based on the
+                amazing code at <a target="_blank" href="http://evanw.github.io/csg.js/">csg.js</a>. CSG.js is javascript code that implements CSG
+                in a very concise and elegant way. I've ported it to C# and it generates the shapes for this prototype. I need CSG
+                operations in order to properly handle clipping operations for shapes that combine, but the first step was to port
+                the code.</p>
+                <p>
+                    I was not looking forward to reading textbooks or porting C or C++ code to implement CSG,
+                    it saved me weeks starting from such amazing work.  
+                 I will be releasing the C# port on github with the MIT license as a way of acknowledging the work done 
+                and making a contribution for the next programmer who is looking for a starting point for CSG in C#.
+                .</p>
+               </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <h4>Select intersection, union, Sphere subtracts cube or cube subtracts sphere</h4>
+                <p> Union <input checked="checked" type="radio" name="operation" value="union" /> </p>
+                <p> Intersection <input type="radio" name="operation" value="intersection" /> </p>
+                <p> Sphere subtracts Cube <input type="radio" name="operation" value="subtraction" /> </p>
+                <p> Cube subtracts Sphere <input type="radio" name="operation" value="subtraction2" /> </p>
+
+                Click 'regenerate' to get 3d shape. Drag left, right up and down to orbit around the shape. <br/>Hold the shift key down
+                and drag down and up to zoom in and out.
+                <input type="button" id="btnSave" value="Regenerate" />
+                <div id="3dContent" style="width:600px;height:600px"></div>
+            </td>
+  
+        </tr>
+
+
+    </table>
+
+</div>
+
+
+
+@section FooterScripts {
+
+    <script type="text/javascript">
+
+var Debugger = function () { };
+
+$(function () {
+
+    Debugger.log = function (message) {
+        try {
+            console.log(message);
+        }
+        catch (exception) {
+            return;
+        }
+    }
+
+    var oShape = null;
+
+    var sceneObjects = [];
+
+    $("#btnSave").on('click', function () {
+
+
+        $.post("P0830_SelectCSG",{operation:$('input:radio[name=operation]:checked').val()})
+            .done(function(data) {
+                /*
+                 * The result is the set of 3d shapes. render that
+                 */
+
+                for (i=0; i < sceneObjects.length; i++) {
+                    scene.remove(sceneObjects[i]);
+                }
+                
+                sceneObjects = [];
+
+                var oShape = JSON.parse(data);
+
+                var i;
+                // Get the first shape
+                for (i=0; i < oShape.ShapeList.length; i++) {
+                    sceneObjects.push(AddJSONShape( oShape.ShapeList[i]));
+                }
+
+            });
+
+    });
+
+});
+
+
+    </script>
+
+<script type="text/javascript">
+    /*
+     * Manage navigation in the 3d window
+     */
+        function degInRad(deg) {
+            return deg * Math.PI / 180;
+        }
+
+        var angle = .01;
+        var MonitorMouseMovement = false;
+        var LastMouseX = 0;
+        var LastMouseY = 0;
+
+        $(document).ready(function () {
+            init();
+
+            $("#3dContent").mousedown(function (b) {
+
+                MonitorMouseMovement = true;
+                LastMouseX = b.clientX;
+                LastMouseY = b.clientY;
+            });
+
+            $("#3dContent").mouseup(function () {
+                MonitorMouseMovement = false;
+            });
+
+
+            $("#3dContent").mousemove(function (c) {
+
+
+                if (MonitorMouseMovement) {
+
+                    var DeltaX = LastMouseX - c.clientX;
+                    var DeltaY = LastMouseY - c.clientY;
+
+                    // Orbit around up -- Y axis
+                    Theta -= degInRad(DeltaX * 5);
+                    /*
+                     * If the shift key is down move rho
+                     */
+                    if (c.shiftKey) {
+                        Rho -= DeltaY / 2;
+                    } else {
+                        //
+                        Phi += degInRad(DeltaY * 5);
+                    }
+
+
+                    LastMouseX = c.clientX;
+                    LastMouseY = c.clientY;
+
+                    render();
+                }
+            });
+
+            $("#3dContent").keydown(function (e) {
+
+                switch (e.keyCode) {
+                    case 37:
+                        Theta += degInRad(1);
+                        render();
+                        break;
+                    case 38:    // up arrow
+                        Rho--;
+                        render();
+                        break;
+                    case 39:
+                        Theta -= degInRad(1);
+                        render();
+                        break;
+                    case 40:    // down arrow
+                        Rho++;
+                        render();
+                        break;
+                }
+            });
+
+        });
+
+
+
+</script>
+}
