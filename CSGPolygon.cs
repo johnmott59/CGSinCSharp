@@ -16,13 +16,7 @@ namespace CSGV1
         {
 
         }
-#if false
-CSG.Polygon = function(vertices, shared) {
-  this.vertices = vertices;
-  this.shared = shared;
-  this.plane = CSG.Plane.fromPoints(vertices[0].pos, vertices[1].pos, vertices[2].pos);
-};
-#endif
+
         public CSGPolygon(List<CSGVertex> vertices,int shared)
         {
             this.vertices = vertices;
@@ -52,13 +46,7 @@ CSG.Polygon = function(vertices, shared) {
 
             this.plane = CSGPlane.fromPoints(P0.pos, P1.pos, P2.pos);
         }
-#if false
-        clone: function()
-        {
-            var vertices = this.vertices.map(function(v) { return v.clone(); });
-            return new CSG.Polygon(vertices, this.shared);
-        },
-#endif
+
         public CSGPolygon clone()
         {
             CSGPolygon oClone = new CSGPolygon() { shared = this.shared, plane=this.plane.clone() };
@@ -71,12 +59,6 @@ CSG.Polygon = function(vertices, shared) {
 
         }
 
-#if false
-        flip: function() {
-    this.vertices.reverse().map(function(v) { v.flip(); });
-    this.plane.flip();
-  }
-#endif
         public CSGPolygon flip()
         {
             for (int i=this.vertices.Count-1; i >= 0; i--)
