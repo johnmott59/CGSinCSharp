@@ -9,14 +9,6 @@ namespace CSGV1
     public partial class CSG
     {
         public List<CSGPolygon> polygons { get; set; } = new List<CSGPolygon>();
-#if false
-        CSG.fromPolygons = function(polygons)
-        {
-            var csg = new CSG();
-            csg.polygons = polygons;
-            return csg;
-        };
-#endif
 
         public static CSG fromPolygons(List<CSGPolygon> polygons)
         {
@@ -122,14 +114,6 @@ namespace CSGV1
             return sequenceList;
         }
 
-
-#if false
-        clone: function() {
-        var csg = new CSG();
-        csg.polygons = this.polygons.map(function(p) { return p.clone(); });
-        return csg;
-        },
-#endif
         public CSG clone()
         {
             CSG csg = new CSG();
@@ -140,28 +124,12 @@ namespace CSGV1
 
             return csg;
         }
-#if false
-        toPolygons: function() {
-    return this.polygons;
-  },
-#endif
+
         public List<CSGPolygon> toPolygons()
         {
             return this.polygons;
         }
-#if false
-union: function(csg) {
-    var a = new CSG.Node(this.clone().polygons);
-    var b = new CSG.Node(csg.clone().polygons);
-    a.clipTo(b);
-    b.clipTo(a);
-    b.invert();
-    b.clipTo(a);
-    b.invert();
-    a.build(b.allPolygons());
-    return CSG.fromPolygons(a.allPolygons());
-  },
-#endif
+
         public CSG union(CSG csg)
         {
             CSGNode a = new CSGNode(this.clone().polygons);
@@ -175,21 +143,7 @@ union: function(csg) {
             return CSG.fromTriangles(a.allPolygons());
 
         }
-#if false
-          subtract: function(csg) {
-    var a = new CSG.Node(this.clone().polygons);
-    var b = new CSG.Node(csg.clone().polygons);
-    a.invert();
-    a.clipTo(b);
-    b.clipTo(a);
-    b.invert();
-    b.clipTo(a);
-    b.invert();
-    a.build(b.allPolygons());
-    a.invert();
-    return CSG.fromPolygons(a.allPolygons());
-  },
-#endif
+
         public CSG subtract(CSG csg)
         {
             CSGNode a = new CSGNode(this.clone().polygons);
@@ -204,20 +158,7 @@ union: function(csg) {
             a.invert();
             return CSG.fromTriangles(a.allPolygons());
         }
-#if false
-  intersect: function(csg) {
-    var a = new CSG.Node(this.clone().polygons);
-    var b = new CSG.Node(csg.clone().polygons);
-    a.invert();
-    b.clipTo(a);
-    b.invert();
-    a.clipTo(b);
-    b.clipTo(a);
-    a.build(b.allPolygons());
-    a.invert();
-    return CSG.fromPolygons(a.allPolygons());
-  },
-#endif
+
         public CSG intersect(CSG csg) { 
             CSGNode a = new CSGNode(this.clone().polygons);
             CSGNode b = new CSGNode(csg.clone().polygons);
@@ -230,13 +171,7 @@ union: function(csg) {
             a.invert();
             return CSG.fromTriangles(a.allPolygons());
         }
-#if false
-        inverse: function() {
-    var csg = this.clone();
-    csg.polygons.map(function(p) { p.flip(); });
-    return csg;
-  }
-#endif
+
         public CSG inverse()
         {
             var csg = this.clone();
