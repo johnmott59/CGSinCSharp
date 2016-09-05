@@ -18,34 +18,19 @@ namespace CSGV1
             this.normal = normal;
             this.w = w;
         }
-#if false
-        CSG.Plane.fromPoints = function(a, b, c) {
-            var n = b.minus(a).cross(c.minus(a)).unit();
-            return new CSG.Plane(n, n.dot(a));
-        };
 
-#endif
         public static CSGPlane fromPoints(CSGVector a, CSGVector b, CSGVector c) 
         {
             CSGVector n = b.minus(a).cross(c.minus(a)).unit();
             return new CSGPlane(n, n.dot(a));
         }
 
-#if false
-        clone: function() {
-            return new CSG.Plane(this.normal.clone(), this.w);
-        },
-#endif
+
         public CSGPlane clone()
         {
             return new CSGPlane(this.normal.clone(), this.w);
         }
-#if false
-        flip: function() {
-              this.normal = this.normal.negated();
-             this.w = -this.w;
-         },
-#endif
+
         public void flip()
         {
             this.normal = this.normal.negated();
