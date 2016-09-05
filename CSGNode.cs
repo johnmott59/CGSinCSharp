@@ -21,17 +21,7 @@ namespace CSGV1
         {
             if (polygons != null) this.build(polygons);
         }
-#if false
-CSG.Node.prototype = {
-  clone: function() {
-    var node = new CSG.Node();
-    node.plane = this.plane && this.plane.clone();
-    node.front = this.front && this.front.clone();
-    node.back = this.back && this.back.clone();
-    node.polygons = this.polygons.map(function(p) { return p.clone(); });
-    return node;
-  },
-#endif
+
         public CSGNode clone()
         {
             CSGNode node = new CSGNode();
@@ -46,20 +36,6 @@ CSG.Node.prototype = {
             return node;
         }
 
-#if false
-
-         invert: function() {
-    for (var i = 0; i < this.polygons.length; i++) {
-      this.polygons[i].flip();
-    }
-    this.plane.flip();
-    if (this.front) this.front.invert();
-    if (this.back) this.back.invert();
-    var temp = this.front;
-    this.front = this.back;
-    this.back = temp;
-  },
-#endif
         public void invert()
         {
             for (int i = 0; i < this.polygons.Count; i++) this.polygons[i].flip();
@@ -71,19 +47,6 @@ CSG.Node.prototype = {
             this.back = temp;
         }
 
-#if false
-  clipPolygons: function(polygons) {
-    if (!this.plane) return polygons.slice();
-    var front = [], back = [];
-    for (var i = 0; i < polygons.length; i++) {
-      this.plane.splitPolygon(polygons[i], front, back, front, back);
-    }
-    if (this.front) front = this.front.clipPolygons(front);
-    if (this.back) back = this.back.clipPolygons(back);
-    else back = [];
-    return front.concat(back);
-  },
-#endif
         public List<CSGPolygon> clipPolygons(List<CSGPolygon> polygons)
         {
             if (this.plane == null) {
@@ -124,13 +87,6 @@ CSG.Node.prototype = {
             return front;
         }
 
-#if false
-        clipTo: function(bsp) {
-    this.polygons = bsp.clipPolygons(this.polygons);
-    if (this.front) this.front.clipTo(bsp);
-    if (this.back) this.back.clipTo(bsp);
-  },
-#endif
         public void clipTo(CSGNode bsp)
         {
             this.polygons = bsp.clipPolygons(this.polygons);
@@ -138,14 +94,6 @@ CSG.Node.prototype = {
             if (this.back != null) this.back.clipTo(bsp);
         }
 
-#if false
- allPolygons: function() {
-    var polygons = this.polygons.slice();
-    if (this.front) polygons = polygons.concat(this.front.allPolygons());
-    if (this.back) polygons = polygons.concat(this.back.allPolygons());
-    return polygons;
-  },
-#endif
         public List<CSGPolygon> allPolygons()
         {
             /* 
@@ -173,24 +121,7 @@ CSG.Node.prototype = {
 
             return polygons;
         }
-#if false
-        build: function(polygons) {
-    if (!polygons.length) return;
-    if (!this.plane) this.plane = polygons[0].plane.clone();
-    var front = [], back = [];
-    for (var i = 0; i < polygons.length; i++) {
-      this.plane.splitPolygon(polygons[i], this.polygons, this.polygons, front, back);
-    }
-    if (front.length) {
-      if (!this.front) this.front = new CSG.Node();
-      this.front.build(front);
-    }
-    if (back.length) {
-      if (!this.back) this.back = new CSG.Node();
-      this.back.build(back);
-    }
-  }
-#endif
+
         public void build(List<CSGPolygon> polygons)
         {
             if (polygons.Count == 0) return;
