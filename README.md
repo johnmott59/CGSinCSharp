@@ -6,7 +6,7 @@ It is a C# port of the wonderful Javascript code located http://evanw.github.io/
 
 The CSG work is done in the CSG classes, files beginning with CSG. There are a few other files to help render the results in ASP.NET MVC, but I've intentionally kept the classes pure code not dependent on where its being run.
 
-If you only want the CSG code and want to see how its called get all of the CSG*.cs files and the file UpdateCShape.cs to see how its called and used. The List of CSGPolygons is the final output of the operation.
+If you only want the CSG code and want to see how its called get all of the CSG*.cs files and the file P0830Controller.cs to see how its called and used. The List of CSGPolygons is the final output of the operation.
 
 If you want to build an MVC app there is a controller file:
 P0830Controller.cs
