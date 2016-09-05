@@ -1,6 +1,6 @@
 # CGSinCSharp
 
-This code is a set of classes for handling Constructive Solid Geometry (CSG) in C# and some helper code to render the results in ASP.NET MVC
+This code is a set of classes for handling Constructive Solid Geometry (CSG) in C# and some helper code to render the results in ASP.NET MVC using three.js
 
 It is a C# port of the wonderful Javascript code located http://evanw.github.io/csg.js/docs/
 
