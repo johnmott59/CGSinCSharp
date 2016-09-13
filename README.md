@@ -8,7 +8,7 @@ The CSG work is done in the CSG classes, files beginning with CSG. There are a f
 
 The code contains a cube, sphere and cylinder for testing but you can load any polygon mesh into the classes and it will work -- the code doesn't know that the mesh came from a sphere, cylinder or cube. The meshes do need to be closed meshes in order to work properly.
 
-The output of the operations is a list of CSGPolygons, they can be sent to wherever they are needed. In my case I convert them to a JSON object and send them to the viewer to render in three.js
+The output of the operations is a list of CSGPolygons, they can be sent to wherever they are needed. In my case I convert them to a JSON object and send them to the viewer to render in three.js. The polyons may have more than three sides but they are convext and easy to tesselate.
 
 If you only want the CSG code and want to see how its called get all of the CSG*.cs files and the file P0830Controller.cs to see how its called and used. 
 
