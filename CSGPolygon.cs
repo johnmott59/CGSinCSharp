@@ -61,10 +61,16 @@ namespace CSGV1
 
         public CSGPolygon flip()
         {
-            for (int i=this.vertices.Count-1; i >= 0; i--)
+            /*
+             * Reverse the vertex list
+             */
+            this.vertices.Reverse();
+
+            foreach (CSGVertex v in this.vertices)
             {
-                this.vertices[i].flip();
+                v.flip();
             }
+       
             this.plane.flip();
 
             return this;
