@@ -6,7 +6,7 @@ It is a C# port of the wonderful Javascript code located http://evanw.github.io/
 
 The CSG work is done in the CSG classes, files beginning with CSG. There are a few other files to help render the results in ASP.NET MVC, but I've intentionally kept the classes pure code not dependent on what kind of app they are run in. 
 
-The code contains a cube, sphere and cylinder for testing but you can load any polygon mesh into the classes and it will work -- the code doesn't know that the mesh came from a sphere, cylinder or cube.
+The code contains a cube, sphere and cylinder for testing but you can load any polygon mesh into the classes and it will work -- the code doesn't know that the mesh came from a sphere, cylinder or cube. The meshes do need to be closed meshes in order to work properly.
 
 The output of the operations is a list of CSGPolygons, they can be sent to wherever they are needed. In my case I convert them to a JSON object and send them to the viewer to render in three.js
 
