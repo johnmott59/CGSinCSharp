@@ -60,9 +60,10 @@ namespace CSGV1
 
                 for (int i=0; i < 4; i++)
                 {
-                    float x = CubeCenter.x + CubeDimension[0] * 2 * ((cm.param[i] & 1) != 0 ? 1 : 0) - 1;
-                    float y = CubeCenter.y + CubeDimension[1] * 2 * ((cm.param[i] & 2) != 0 ? 1 : 0) - 1;
-                    float z = CubeCenter.z + CubeDimension[2] * 2 * ((cm.param[i] & 4) != 0 ? 1 : 0) - 1;
+                  
+                    float x = CubeCenter.x + CubeDimension[0] * (2 * ((cm.param[i] & 1) != 0 ? 1 : 0) - 1);
+                    float y = CubeCenter.y + CubeDimension[1] * (2 * ((cm.param[i] & 2) != 0 ? 1 : 0) - 1);
+                    float z = CubeCenter.z + CubeDimension[2] * (2 * ((cm.param[i] & 4) != 0 ? 1 : 0) - 1);
 
                     CSGVector pos = new CSGVector(x, y, z);
                     CSGVector n = new CSGVector(cm.nx, cm.ny, cm.nz);
