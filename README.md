@@ -27,4 +27,6 @@ ThreeJS, JQuery and Newtonsoft are all available via NuGet.
 
 To see a working sample visit http://meshola.com/prototype/p0830
 
+I used this code in my project for procedural mesh generation at www.meshola.com
+
 Many props to Evan for the Javascript work. I think I'm a solid programmer, and I have flashes of insight at times but the code he wrote gets to the very heart of the problem and solves it with an elegance that is unlike anything I've ever seen, and in Javacript to boot.
